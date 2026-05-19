@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+
+    <!-- Google Fonts: Playfair Display for headings, Source Sans 3 for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+
+        /* ── Reset and CSS Variables ──────────────────────────── */
+        /* CSS variables let us define colours once at the top and
+           reuse them everywhere. If we want to change the accent
+           colour later we only need to edit it in one place.       */
+        :root {
+            --bg:        #f7f3ee;
+            --surface:   #ffffff;
+            --ink:       #1a1612;
+            --ink-light: #8c8279;
+            --accent:    #c0392b;
+            --accent-dk: #96281b;
+            --border:    #e8e0d6;
+        }
+
+        /* The * selector targets every element on the page.
+           Removing default margin/padding gives us a clean slate.
+           box-sizing: border-box means padding is counted INSIDE
+           an element's width, not added on top of it.             */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ── Page Body ─────────────────────────────────────────── */
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background-color: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 60px 20px 100px;
+        }
+
+        /* ── Main Card ─────────────────────────────────────────── */
+        .app {
+            background: var(--surface);
+            border-radius: 4px;
+            width: 100%;
+            max-width: 560px;
+            box-shadow: 0 2px 40px rgba(26,22,18,0.10);
+            overflow: hidden;
+        }
+
+        /* ── Header ────────────────────────────────────────────── */
+        .app-header {
+            background: var(--ink);
+            color: #fff;
+            padding: 36px 40px 32px;
+            position: relative;
+        }
+
+        .app-header .label {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+
+        .app-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -1px;
+        }
+
+        .task-count {
+            margin-top: 10px;
+            font-size: 13px;
+            color: #888;
+            letter-spacing: 0.5px;
+        }
+
+        /* Red bar along the bottom of the header */
+        .app-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 4px;
+            background: var(--accent);
+        }
+
+        /* ── Input Section ─────────────────────────────────────── */
+        .input-section {
+            padding: 28px 40px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        /* flex layout puts the input and button side by side */
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        #taskInput {
+            flex: 1;
+            border: 1.5px solid var(--border);
+            border-radius: 3px;
+            padding: 12px 16px;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 15px;
+            color: var(--ink);
+            background: var(--bg);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        /* Highlight the border when the user clicks into the field */
+        #taskInput:focus {
+            border-color: var(--accent);
+        }
+
+        #addBtn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            padding: 12px 22px;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            white-space: nowrap;
+        }
+
+        #addBtn:hover  { background: var(--accent-dk); }
+        #addBtn:active { transform: scale(0.97); }
+
+        /* ── Task List ─────────────────────────────────────────── */
+        .list-section {
+            padding: 0 40px 32px;
+        }
+
+        #taskList {
+            list-style: none;
+            margin-top: 8px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+            animation: slideIn 0.25s ease;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(16px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Custom checkbox */
+        .task-checkbox {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border);
+            border-radius: 2px;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.15s, border-color 0.15s;
+            position: relative;
+        }
+
+        .task-checkbox:checked {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* White tick drawn with CSS */
+        .task-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 3px; top: 0px;
+            width: 5px; height: 9px;
+            border: 2px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg);
+        }
+
+        .task-text {
+            flex: 1;
+            font-size: 15px;
+            line-height: 1.4;
+            transition: color 0.2s;
+        }
+
+        /* Strike-through style when task is ticked */
+        .task-text.done {
+            text-decoration: line-through;
+            color: var(--ink-light);
+        }
+
+        .remove-btn {
+            background: none;
+            border: 1px solid transparent;
+            border-radius: 3px;
+            color: var(--ink-light);
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            padding: 4px 10px;
+            cursor: pointer;
+            transition: color 0.2s, border-color 0.2s;
+            flex-shrink: 0;
+        }
+
+        .remove-btn:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+
+        /* ── Empty State ───────────────────────────────────────── */
+        .empty-state {
+            text-align: center;
+            padding: 48px 0 20px;
+            color: var(--ink-light);
+        }
+
+        .empty-state .empty-icon { font-size: 36px; margin-bottom: 12px; }
+        .empty-state p { font-size: 14px; line-height: 1.6; }
+
+    </style>
+</head>
+<body>
+
+    <!-- ── Main App Card ────────────────────────────────────── -->
+    <div class="app">
+
+        <!-- Header: title and live task count -->
+        <header class="app-header">
+            <div class="label">Daily Planner</div>
+            <h1>My Tasks</h1>
+            <!--
+                This <span> is updated by JavaScript each time the
+                list changes, so it always shows the current count.
+            -->
+            <p class="task-count">
+                <span id="taskCount">0</span> tasks remaining
+            </p>
+        </header>
+
+        <!-- Input section: text field + Add button -->
+        <div class="input-section">
+            <div class="input-row">
+                <!--
+                    id="taskInput"  lets JavaScript find this element
+                    placeholder     is hint text shown when it's empty
+                -->
+                <input
+                    type="text"
+                    id="taskInput"
+                    placeholder="What needs doing today?"
+                    maxlength="120"
+                />
+                <!--
+                    onclick="addTask()" calls the addTask() function
+                    defined in script.js when this button is clicked.
+                -->
+                <button id="addBtn" onclick="addTask()">Add Task</button>
+            </div>
+        </div>
+
+        <!-- Task list: <li> items are injected here by JavaScript -->
+        <div class="list-section">
+            <!--
+                <ul> = unordered list (no bullet numbers).
+                id="taskList" is how script.js targets this element
+                to insert tasks into it. It starts empty.
+            -->
+            <ul id="taskList"></ul>
+        </div>
+
+    </div>
+
+    <!--
+        The <script> tag must come AFTER the HTML above.
+        If it came first, the page elements wouldn't exist yet
+        and getElementById("taskList") would return null.
+    -->
+    <script src="todo_script.js"></script>
+
+</body>
+</html>
