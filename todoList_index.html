@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="Viewport" content="width=device-width, initial-scale=1.0">
+        <title>To-Do List</title>
+
+
+        <!-- Google Fonts Playfair Display for headings, Source Sans 3 for body text -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+        
+        <link rel="stylesheet" href="style.css">
+    </head>
+
+    <body>
+
+        <div class="app">
+
+        
+            <!-- ---- Main App Card --------------------------------------------------- -->
+            <header class="app-header">
+                <div class="label">Daily Planner</div>
+                <h1>My Tasks</h1>
+
+                <!-- 
+                This '<span>' is updated by JS each time the list changes, so it always
+                shows the current count.
+                -->
+                <p class="task-count">
+                    <span id="taskCount">0</span> tasks remaining
+                </p>
+            </header>
+
+            <!-- Imput section: text field + Add button -->
+            <div class="input-section">
+                <div class="input-row">
+
+                    <!-- id="taskInput" lets JavaScript find this ellement -->
+                    <input
+                    type="text"
+                    id="taskInput"
+                    placeholder="What needs doing today?"
+                    maxlength="120"
+                    />
+
+                    <!--
+                    onclick="addTask()" calls the 'addTask()' function im going to define
+                    in script.js when this button ia clicked.
+                    -->
+                    <button id="addBtn" onclick="addTask()">Add Task</button>
+                </div>
+            </div>
+
+
+            <!-- Task list: <li> items are injected here by JavaScript -->
+            <div class="list-section">
+ 
+                <!--
+                '<ul>' = unordered list (no bulllet nmbers).
+                'id="taskList"' is how script.js targets this element to insert tasks
+                to it. It stays empty.
+                -->
+                <ul id="taskList"></ul>
+            </div>
+
+        </div>
+            
+    
+        <!--
+        The <script> tag after the HTML above. If it came first we would need a specific 
+        JavaScript command to wait for the DOM to load to begin executing our JavaScript code
+        -->
+        <script src="toDo_script.js"></script>
+        
+
+    </body>
+</html>
