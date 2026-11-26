@@ -4,7 +4,7 @@ A simple task planner built with plain HTML, CSS and JavaScript. Add tasks, tick
 
 
 
-**Live demo:** <!-- paste your GitHub Pages link here, if enabled -->
+**Live demo:** https://ademola-o.github.io/To-Do-List-Project/
 
 ## Features
 
@@ -38,7 +38,7 @@ todo-list/
 There's no build step and no server needed. Download or clone the project and open `index.html` in your browser.
 
 ```
-git clone https://github.com/Ademola-O/<your-repo-name>.git
+git clone https://github.com/Ademola-O/To-Do-List-Peoject.git
 ```
 
 ## How it works
