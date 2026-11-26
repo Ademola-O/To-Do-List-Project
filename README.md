@@ -1,2 +1,11 @@
 # To-Do-List-Project
-HTML for a to-do list app I'm creating that will be able to log down inputs then tick off if they have been completed or not and then delete them upon completion.
+
+A single page simple To-do list app built with HTML, CSS and JavaScript. Allows you to write down tasks for yourself, save them into a list and then tick them off and cross them out when completed. 
+
+**Live demo:**
+
+## Features 
+
+- **Write entries:** Write down tasks you need to complete 
+- **Recent entries panel:** the New Entry section shows your latest entries underneath the editor
+- 
