@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NovaTrade Pro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div>
+            <div class="logo">AddyTrade Pro</div>
+
+            <nav class="nav-links">
+                <a href="#" class="active">Dashboard</a>
+                <a href="#">Portfolio</a>
+                <a href="#">Markets</a>
+                <a href="#">Analytics</a>
+                <a href="#">Trading</a>
+                <a href="#">Wallet</a>
+                <a href="#">AI Insights</a>
+                <a href="#">Settings</a>
+            </nav>
+        </div>
+
+        <div class="sidebar-bottom">
+            <button class="btn blue-btn">Upgrade Pro</button>
+        </div>
+
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <input type="text" placeholder="Search stocks, ETFs, crypto..." class="search-box">
+
+            <div class="top-actions">
+                <button class="btn green-btn">Deposit</button>
+                <button class="btn blue-btn">Withdraw</button>
+                <button class="theme-toggle" id="themeBtn">☀</button>
+            </div>
+
+        </header>
+
+        <section class="dashboard">
+
+            <div class="card">
+
+                <p>Total Portfolio Value</p>
+                <h1 class="balance" id="portfolioBalance">$128,430.25</h1>
+                <p class="gain">+18.45% this month</p>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <h4>Today's Profit</h4>
+                        <h2 class="positive">+$3,420</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <h4>Active Positions</h4>
+                        <h2>12</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <h4>Win Rate</h4>
+                        <h2>74%</h2>
+                    </div>
+
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="portfolioChart"></canvas>
+                </div>
+
+            </div>
+
+            <div class="card trade-panel">
+
+                <h2>Quick Trade</h2>
+
+                <div class="input-group">
+                    <label>Stock</label>
+                    <select id="stockSelect">
+                        <option>Apple (AAPL)</option>
+                        <option>Tesla (TSLA)</option>
+                        <option>Microsoft (MSFT)</option>
+                        <option>NVIDIA (NVDA)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Quantity</label>
+                    <input type="number" id="quantity" placeholder="10">
+                </div>
+
+                <div class="input-group">
+                    <label>Order Type</label>
+                    <select>
+                        <option>Market Order</option>
+                        <option>Limit Order</option>
+                        <option>Stop Order</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Price Alert</label>
+                    <input type="number" placeholder="$200.00">
+                </div>
+
+                <button class="buy-btn" onclick="buyStock()">Buy Stock</button>
+                <button class="sell-btn" onclick="sellStock()">Sell Stock</button>
+
+            </div>
+
+            <div class="card table-section">
+
+                <div class="table-header">
+                    <h2>Market Watchlist</h2>
+
+                    <div class="table-controls">
+                        <input type="text" placeholder="Filter stocks...">
+
+                        <select>
+                            <option>All Markets</option>
+                            <option>Technology</option>
+                            <option>Healthcare</option>
+                            <option>Finance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Price</th>
+                                <th>24h</th>
+                                <th>Volume</th>
+                                <th>Market Cap</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>Apple</td>
+                                <td>$189.22</td>
+                                <td class="positive">+2.5%</td>
+                                <td>24M</td>
+                                <td>$2.8T</td>
+                                <td><button class="btn green-btn">Trade</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>Tesla</td>
+                                <td>$242.14</td>
+                                <td class="negative">-1.2%</td>
+                                <td>18M</td>
+                                <td>$790B</td>
+                                <td><button class="btn green-btn">Trade</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>Microsoft</td>
+                                <td>$412.90</td>
+                                <td class="positive">+3.1%</td>
+                                <td>12M</td>
+                                <td>$3.1T</td>
+                                <td><button class="btn green-btn">Trade</button></td>
+                            </tr>
+
+                            <tr>
+                                <td>NVIDIA</td>
+                                <td>$922.55</td>
+                                <td class="positive">+7.2%</td>
+                                <td>39M</td>
+                                <td>$2.4T</td>
+                                <td><button class="btn green-btn">Trade</button></td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+            <div class="news-section">
+
+                <div class="news-card">
+                    <div class="news-image"></div>
+                    <div class="news-content">
+                        <h3>AI Stocks Rally</h3>
+                        <p>Technology markets continue upward as AI companies report record earnings.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image"></div>
+                    <div class="news-content">
+                        <h3>Crypto Market Gains</h3>
+                        <p>Bitcoin and Ethereum show strong momentum in global trading sessions.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-image"></div>
+                    <div class="news-content">
+                        <h3>Federal Reserve Update</h3>
+                        <p>Investors await interest rate announcements impacting financial markets.</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<div class="mobile-nav">
+    <a href="#">Home</a>
+    <a href="#">Markets</a>
+    <a href="#">Trade</a>
+    <a href="#">Wallet</a>
+    <a href="#">Profile</a>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+

@@ -1,249 +1,431 @@
-/* ---- Reset and CSS Variables -------------------------------------- */
-/* CSS Variables allow me to define colours once at the top and then 
-reuse them wherever I want. If i want to chage the accent colour later 
-I only need to edit it on one place                                    */
-:root {
-    --bg:        #f7f3ee;
-    --surface:   #ffffff;
-    --ink:       #1a1612;
-    --ink-light: #8c8279;
-    --accent:    #c0392b;
-    --accent-dk: #96281b;
-    --border:    #e8e0d6;
+:root{
+    --bg:#081120;
+    --card:#111827;
+    --card2:#172235;
+    --text:#ffffff;
+    --muted:#9ca3af;
+    --green:#22c55e;
+    --red:#ef4444;
+    --blue:#3b82f6;
+    --border:rgba(255,255,255,0.08);
+    --shadow:0 10px 30px rgba(0,0,0,0.35);
 }
 
-/* The * selector targets every element on the page. Removing default 
-margin/padding gives us a clean slate. box-sizing: border-box means
-means padding is counted inside an element's width, not added on top    */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+body.light{
+    --bg:#f3f4f6;
+    --card:#ffffff;
+    --card2:#f9fafb;
+    --text:#111827;
+    --muted:#6b7280;
+    --border:rgba(0,0,0,0.08);
 }
 
-/* ---- Page Body --------------- */
-body {
-    font-family: 'Source Sans 3', sans-serif;
-    background-color: var(--bg);
-    color: var(--ink);
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 60px 20px 100px;
-}
-                             
-/* ---- Main Card ----------- */
-.app {
-    background: var(--surface);
-    border-radius: 4px;
-    width: 100%;
-    max-width: 560px;
-    box-shadow: 0 2px 40px rgba(26, 22, 18, 0.10);
-    overflow: hidden;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter',sans-serif;
 }
 
-
-/* ---- Header ----- */
-.app-header {
-    background: var(--ink);
-    color: #fff;
-    padding: 36px 40px 32px;
-    position: relative;
+body{
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    transition:0.3s ease;
 }
 
-.app-header .label {
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 8px;
+.app{
+    display:grid;
+    grid-template-columns:260px 1fr;
+    min-height:100vh;
 }
 
-.app-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 42px;
-    font-weight: 900;
-    letter-spacing: -1px;
-    line-height: 1.05;
+/* SIDEBAR */
+
+.sidebar{
+    background:var(--card);
+    padding:24px;
+    border-right:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
 }
 
-
-.task-count {
-    margin-top: 10px;
-    font-size: 13px;
-    color: #888;
-    letter-spacing: 0.5px;
+.logo{
+    font-size:28px;
+    font-weight:800;
+    color:var(--green);
+    margin-bottom:40px;
 }
 
-/* --- Red bar along header -------- */
-.app-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0; left: 0;
-    width: 100%; height: 4px;
-    background: var(--accent);
+.nav-links{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
 }
 
-/* --- Input Section ------------- */
-.input-section {
-    padding: 28px 40px 24px;
-    border-bottom: 1px solid var(--border);
+.nav-links a{
+    text-decoration:none;
+    color:var(--muted);
+    padding:14px 18px;
+    border-radius:14px;
+    transition:0.3s;
+    font-weight:500;
 }
 
-/* flex layout put the input and button side by side */
-.input-row {
-    display: flex;
-    gap: 10px;
+.nav-links a:hover,
+.nav-links .active{
+    background:var(--green);
+    color:black;
 }
 
-#taskInput {
-    flex: 1;
-    border: 1.5px solid var(--border);
-    border-radius: 3px;
-    padding: 12px 16px;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 15px;
-    color: var(--ink);
-    background: var(--bg);
-    outline: none;
-    transition: border-color 0.2s;
+.sidebar-bottom{
+    margin-top:30px;
 }
 
-/* Highlight the border when the user clicks into the field */
-#taskInput:focus {
-    border-color: var(--accent);
+/* MAIN */
+
+.main{
+    display:flex;
+    flex-direction:column;
 }
 
-#addBtn {
-    background: var(--accent);
-    color: #fff;
-    border: none;
-    border-radius: 3px;
-    padding: 12px 22px;
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.1s;
-    white-space: nowrap;
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 30px;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    background:var(--bg);
+    z-index:100;
 }
 
-#addBtn:hover { 
-    background: var(--accent-dk); 
+.search-box{
+    background:var(--card);
+    border:none;
+    color:var(--text);
+    padding:14px 18px;
+    border-radius:14px;
+    width:320px;
 }
 
-#addBtn:active {
-    transform: scale(0.97); 
+.top-actions{
+    display:flex;
+    align-items:center;
+    gap:14px;
 }
 
-/* ---- Task List ------------- */ 
-.list-section {
-    padding: 0 40px 32px;
+.btn{
+    border:none;
+    cursor:pointer;
+    padding:12px 18px;
+    border-radius:14px;
+    font-weight:600;
+    transition:0.3s;
 }
 
-#taskList {
-    list-style: none;
-    margin-top: 8px;
+.btn:hover{
+    transform:translateY(-2px);
 }
 
-.task-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 15px 0;
-    border-bottom: 1px solid var(--border);
-    animation: slideIn 0.25s ease;
+.green-btn{
+    background:var(--green);
+    color:black;
 }
 
-.task-item:last-child {
-    border-bottom: none;
+.blue-btn{
+    background:var(--blue);
+    color:white;
 }
 
- @keyframes slideIn {
-    from { opacity: 0; transform: translateX(16px); }
-    to   { opacity: 1; transform: translateX(0); }
+.theme-toggle{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    border:none;
+    background:var(--card);
+    color:var(--text);
+    cursor:pointer;
 }
 
-/* Custom checkbock */ 
-.task-checkbox {
-    appearance: none;
-    width: 18px;
-    height: 18px;
-    border: 2px solid var(--border);
-    border-radius: 2px;
-    cursor: pointer;
-    flex-shrink: 0;
-    transition: background 0.15s, border-color 0.15s;
-    position: relative;
+/* GRID */
+
+.dashboard{
+    padding:28px;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:24px;
 }
 
- .task-checkbox:checked {
-    background: var(--accent);
-    border-color: var(--accent);
+.card{
+    background:var(--card);
+    border-radius:24px;
+    padding:24px;
+    box-shadow:var(--shadow);
 }
 
+/* PORTFOLIO */
 
-/* White tick drawn with CSS */
-.task-checkbox:checked::after {
-    content: '';
-    position: absolute;
-    left: 3px; top: 0px;
-    width: 5px; height: 9px;
-    border: 2px solid #fff;
-    border-top: none;
-    border-left: none;
-    transform: rotate(45deg);
+.balance{
+    font-size:52px;
+    font-weight:800;
+    margin:14px 0;
 }
 
-
-.task-text {
-    flex: 1;
-    font-size: 15px;
-    line-height: 1.4;
-    transition: color 0.2s;
+.gain{
+    color:var(--green);
+    font-weight:700;
 }
 
-/* Strike-through style when task is ticked */
-.task-text.done {
-    text-decoration: line-through;
-    color: var(--ink-light);
+.chart-container{
+    margin-top:30px;
+    height:350px;
 }
 
-.remove-btn {
-    background: none;
-    border: 1px solid transparent;
-    border-radius: 3px;
-    color: var(--ink-light);
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    padding: 4px 10px;
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s;
-    flex-shrink: 0;
+/* STATS */
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin-top:24px;
 }
 
-.remove-btn:hover {
-    color: var(--accent);
-    border-color: var(--accent);
+.stat-card{
+    background:var(--card2);
+    padding:20px;
+    border-radius:18px;
 }
 
-/* ── Empty State ─────────────────── */
-.empty-state {
-    text-align: center;
-    padding: 48px 0 20px;
-    color: var(--ink-light);
+.stat-card h4{
+    color:var(--muted);
+    margin-bottom:10px;
 }
 
-.empty-state .empty-icon { 
-    font-size: 36px; 
-    margin-bottom: 12px; 
+/* TRADE PANEL */
+
+.trade-panel h2{
+    margin-bottom:24px;
 }
 
-.empty-state p { 
-    font-size: 14px; 
-    line-height: 1.6; 
+.input-group{
+    margin-bottom:18px;
+}
+
+.input-group label{
+    display:block;
+    margin-bottom:8px;
+    color:var(--muted);
+}
+
+.input-group input,
+.input-group select{
+    width:100%;
+    background:var(--card2);
+    border:none;
+    border-radius:14px;
+    padding:14px;
+    color:var(--text);
+}
+
+.buy-btn,
+.sell-btn{
+    width:100%;
+    border:none;
+    padding:16px;
+    border-radius:16px;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+.buy-btn{
+    background:var(--green);
+    color:black;
+}
+
+.sell-btn{
+    background:var(--red);
+    color:white;
+}
+
+/* TABLE */
+
+.table-section{
+    grid-column:1/-1;
+}
+
+.table-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.watchlist-table{
+    overflow-x:auto;
+}
+
+.table-controls{
+    display:flex;
+    gap:12px;
+}
+
+.table-controls select,
+.table-controls input{
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:var(--card2);
+    color:var(--text);
+}
+
+.table-controls input{
+    min-width:220px;
+}
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    color:var(--muted);
+    text-align:left;
+    padding-bottom:18px;
+}
+
+td{
+    padding:18px 0;
+    border-top:1px solid var(--border);
+}
+
+.positive{
+    color:var(--green);
+    font-weight:600;
+}
+
+.negative{
+    color:var(--red);
+    font-weight:600;
+}
+
+/* NEWS */
+
+.news-section{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    margin-top:24px;
+}
+
+.news-card{
+    background:var(--card);
+    border-radius:20px;
+    overflow:hidden;
+    transition:0.3s;
+}
+
+.news-card:hover{
+    transform:translateY(-5px);
+}
+
+.news-image{
+    height:160px;
+    background:linear-gradient(135deg,#3b82f6,#22c55e);
+}
+
+.news-content{
+    padding:20px;
+}
+
+.news-content p{
+    color:var(--muted);
+    margin-top:10px;
+    line-height:1.6;
+}
+
+/* MOBILE NAV */
+
+.mobile-nav{
+    display:none;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1200px){
+
+    .dashboard{
+        grid-template-columns:1fr;
+    }
+
+    .news-section{
+        grid-template-columns:1fr;
+    }
+}
+
+@media(max-width:768px){
+
+    .app{
+        grid-template-columns:1fr;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    .topbar{
+        flex-direction:column;
+        gap:16px;
+        align-items:stretch;
+    }
+
+    .search-box{
+        width:100%;
+    }
+
+    .dashboard{
+        padding:16px;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr;
+    }
+
+    .balance{
+        font-size:38px;
+    }
+
+    .table-controls{
+        flex-direction:column;
+    }
+
+    .mobile-nav{
+        position:fixed;
+        bottom:0;
+        left:0;
+        width:100%;
+        background:var(--card);
+        display:flex;
+        justify-content:space-around;
+        padding:16px;
+        border-top:1px solid var(--border);
+        z-index:999;
+    }
+
+    .mobile-nav a{
+        color:var(--muted);
+        text-decoration:none;
+        font-size:14px;
+    }
+
+    .main{
+        padding-bottom:90px;
+    }
 }
